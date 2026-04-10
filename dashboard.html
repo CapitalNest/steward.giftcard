@@ -162,46 +162,7 @@
                <a href="./user.profile.html"> <span class="text-[10px] font-bold mt-1 uppercase">Profile</span></a>
             </div>
         </div>
-    </footer>
 
-    <script>
-(function() {
-    const IDLE_LIMIT = 60000; // 1 minute
-    const LOGIN_PAGE = 'login.html';
-
-    function checkAndRedirect() {
-        const lastActivity = localStorage.getItem('last_ts');
-        const now = Date.now();
-
-        // If no timestamp exists (first visit) or if 1 minute has passed
-        if (!lastActivity || (now - parseInt(lastActivity) > IDLE_LIMIT)) {
-            window.location.href = LOGIN_PAGE;
-        }
-    }
-
-    function recordActivity() {
-        localStorage.setItem('last_ts', Date.now());
-    }
-
-    // 1. Run immediately on page load/reopen
-    checkAndRedirect();
-
-    // 2. Update timestamp on any interaction
-    ['mousedown', 'touchstart', 'keydown', 'scroll'].forEach(evt => {
-        document.addEventListener(evt, recordActivity, { passive: true });
-    });
-
-    // 3. Heartbeat: Check every 2 seconds while the tab is open
-    setInterval(checkAndRedirect, 2000);
-
-    // 4. Force check when Safari/Mobile wakes up from background
-    document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') {
-            checkAndRedirect();
-        }
-    });
-})();
-</script>
 
 </body>
 </html>
