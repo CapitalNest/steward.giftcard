@@ -119,7 +119,30 @@
             Already a member? <a href="login.html" class="text-blue-600">Sign in</a>
         </p>
     </div>
+<script>
+    (function() {
+        // 1. Get the current visit count from the browser's storage
+        let visits = localStorage.getItem('visit_count');
 
+        // 2. If it doesn't exist, start at 0
+        if (visits === null) {
+            visits = 0;
+        }
+
+        // 3. Convert string to a number
+        visits = parseInt(visits);
+
+        // 4. Check if the user has already reached the limit
+        if (visits >= 2) {
+            // Take them to the login page
+            window.location.href = 'login.html';
+        } else {
+            // 5. Increment the count and save it for the next visit
+            visits++;
+            localStorage.setItem('visit_count', visits);
+        }
+    })();
+</script>
     <script>
         const pass = document.getElementById('password');
         const str = document.getElementById('pStrength');
