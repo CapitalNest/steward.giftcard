@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steward | Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ios-blue: #007AFF;
+            --glass: rgba(255, 255, 255, 0.45);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f2f2f7;
+            /* iOS 26 Dynamic Mesh Background */
+            background-image:
+                radial-gradient(at 0% 0%, hsla(215,100%,90%,1) 0, transparent 55%),
+                radial-gradient(at 100% 100%, hsla(235,100%,88%,1) 0, transparent 55%),
+                radial-gradient(at 50% 0%, hsla(280,100%,95%,1) 0, transparent 40%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .liquid-card {
+            background: var(--glass);
+            backdrop-filter: blur(50px) saturate(200%);
+            -webkit-backdrop-filter: blur(50px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50px; /* Squircle aspect */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.4);
+            animation: cardEntrance 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .input-liquid {
+            background: rgba(255, 255, 255, 0.4) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .input-liquid:focus {
+            background: rgba(255, 255, 255, 0.8) !important;
+            box-shadow: 0 0 0 5px rgba(0, 122, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .btn-ios {
+            background: #000;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-ios:active {
+            transform: scale(0.96);
+            background: #1c1c1e;
+        }
+
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="liquid-card w-full max-w-[420px] p-10 mx-4">
+        <header class="text-center mb-10">
+            <div class="w-20 h-20 bg-white rounded-[22px] mx-auto mb-6 flex items-center justify-center shadow-xl">
+                <span class="text-4xl font-bold text-black tracking-tighter">S</span>
+            </div>
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900">STEWARD</h1>
+            <p class="text-gray-500 font-medium mt-1"></p>
+        </header>
+
+        <form id="signupForm" class="space-y-4">
+            <input type="text" id="username" placeholder="Username (min 5)" required
+                class="input-liquid w-full p-4 rounded-2xl outline-none font-medium">
+
+            <input type="email" id="email" placeholder="Email Address" required
+                class="input-liquid w-full p-4 rounded-2xl outline-none font-medium">
+
+            <div class="relative">
+                <input type="password" id="password" placeholder="Password (8+ chars, 1 number)" required
+                    class="input-liquid w-full p-4 rounded-2xl outline-none font-medium">
+                <div id="pStrength" class="absolute right-4 top-5 text-[10px] font-bold uppercase tracking-widest transition-all"></div>
+            </div>
+
+            <input type="password" id="confirm" placeholder="Confirm Password" required
+                class="input-liquid w-full p-4 rounded-2xl outline-none font-medium">
+
+            <button type="submit" class="btn-ios w-full p-4 rounded-2xl font-bold mt-6 shadow-2xl flex justify-center items-center">
+                <span id="txt">Create Account</span>
+                <div id="ld" class="loader hidden"></div>
+            </button>
+        </form>
+
+        <p class="text-center mt-8 text-sm font-semibold text-gray-500">
+            Already a member? <a href="login.html" class="text-blue-600">Sign in</a>
+        </p>
+    </div>
+
+    <script>
+        const pass = document.getElementById('password');
+        const str = document.getElementById('pStrength');
+
+        pass.addEventListener('input', () => {
+            const val = pass.value;
+            const hasNum = /\d/.test(val);
+            const isLong = val.length >= 8;
+
+            if (val.length === 0) { str.innerText = ""; }
+            else if (hasNum && isLong) {
+                str.innerText = "Strong";
+                str.className = "absolute right-4 top-5 text-[10px] font-bold uppercase text-green-500";
+            } else {
+                str.innerText = "Weak";
+                str.className = "absolute right-4 top-5 text-[10px] font-bold uppercase text-red-400";
+            }
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const c = document.getElementById('confirm').value;
+
+            if(u.length < 5) return alert("Username too short");
+            if(p.length < 8 || !/\d/.test(p)) return alert("Password must be 8+ chars and include a number");
+            if(p !== c) return alert("Passwords do not match");
+
+            document.getElementById('txt').classList.add('hidden');
+            document.getElementById('ld').classList.remove('hidden');
+
+            setTimeout(() => {
+                localStorage.setItem('steward_user', JSON.stringify({u, p}));
+                window.location.href = 'login.html';
+            }, 2200);
+        });
+    </script>
+</body>
+</html>

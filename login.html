@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steward | Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f2f2f7;
+            background-image: radial-gradient(at 100% 0%, hsla(210,100%,92%,1) 0, transparent 50%), radial-gradient(at 0% 100%, hsla(230,100%,90%,1) 0, transparent 50%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .liquid-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(40px) saturate(180%);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.06);
+            animation: cardEntrance 0.8s ease-out;
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .input-liquid {
+            background: rgba(255, 255, 255, 0.4) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            transition: all 0.3s ease;
+        }
+
+        .input-liquid:focus {
+            background: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+        }
+
+        .btn-ios-blue {
+            background: #007AFF;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-ios-blue:active {
+            transform: scale(0.95);
+            filter: brightness(0.9);
+        }
+
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="liquid-card w-full max-w-[400px] p-10 mx-4">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900">Welcome Back</h1>
+            <p class="text-gray-500 font-medium mt-1">Securely login to Steward</p>
+        </header>
+
+        <form id="loginForm" class="space-y-4">
+            <input type="text" id="lUser" placeholder="Username" required
+                class="input-liquid w-full p-4 rounded-2xl outline-none font-medium">
+
+            <input type="password" id="lPass" placeholder="Password" required
+                class="input-liquid w-full p-4 rounded-2xl outline-none font-medium">
+
+            <button type="submit" class="btn-ios-blue w-full p-4 rounded-2xl font-bold mt-6 shadow-xl flex justify-center items-center">
+                <span id="txt">Sign In</span>
+                <div id="ld" class="loader hidden"></div>
+            </button>
+        </form>
+
+        <p class="text-center mt-8 text-sm font-semibold text-gray-500">
+            New to Steward? <a href="signup.html" class="text-blue-600">Create Account</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const stored = JSON.parse(localStorage.getItem('steward_user'));
+            const u = document.getElementById('lUser').value;
+            const p = document.getElementById('lPass').value;
+
+            if(stored && u === stored.u && p === stored.p) {
+                document.getElementById('txt').classList.add('hidden');
+                document.getElementById('ld').classList.remove('hidden');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            } else {
+                alert("Incorrect username or password");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Steward.request</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f5f7fa;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 30px 15px;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 50px 40px;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    h2 {
+      color: #00c897;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    strong {
+      color: #111;
+    }
+
+    .pay-btn {
+      display: inline-block;
+      margin-top: 30px;
+      background: #00c897;
+      padding: 15px 35px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 14px;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 200, 151, 0.25);
+    }
+
+    .pay-btn:hover {
+      background: #00a77a;
+      box-shadow: 0 6px 30px rgba(0, 167, 122, 0.3);
+    }
+
+    .footer-note {
+      margin-top: 25px;
+      font-size: 0.88rem;
+      color: #888;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 40px 25px;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+      }
+
+      .pay-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Complete Region Update</h2>
+    <p>To access your gift card from Nigeria, please make a secure payment of <strong>€8.99</strong> via Paystack.</p>
+    <p>This one-time verification ensures safe, region-specific usage and unlocks the gift card for your location.</p>
+    <a href="./paystack.html" class="pay-btn">Proceed to Payment</a>
+    <div class="footer-note">
+      Payment will be processed securely through Paystack.<br>
+      Region will be updated instantly upon confirmation.
+    </div>
+  </div>
+</body>
+</html>
