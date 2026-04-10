@@ -113,6 +113,59 @@
         </div>
     </main>
 
+    
+    
     <div class="h-1 w-24 bg-white/10 rounded-full mx-auto mb-4"></div>
+<script>
+    // Configuration: Timeout duration in milliseconds (60,000 ms = 1 minute)
+    const TIMEOUT_DURATION = 60000; 
+
+    function checkSession() {
+        const currentTime = Date.now();
+        const lastActive = localStorage.getItem('lastActiveTime');
+
+        if (lastActive) {
+            const timePassed = currentTime - parseInt(lastActive);
+
+            // If the difference is greater than or equal to 1 minute
+            if (timePassed >= TIMEOUT_DURATION) {
+                forceLogout();
+                return;
+            }
+        } else {
+            // If no timestamp exists (first visit), set one now
+            localStorage.setItem('lastActiveTime', currentTime.toString());
+        }
+    }
+
+    function forceLogout() {
+        // Clear the timestamp so they aren't stuck in a redirect loop
+        localStorage.removeItem('lastActiveTime');
+        // Redirect to your login page
+        window.location.href = 'login.html';
+    }
+
+    /**
+     * RESET LOGIC
+     * This part updates the "lastActiveTime" whenever the user moves the mouse,
+     * clicks, or types. This prevents them from being kicked out while 
+     * they are actually using the page.
+     */
+    function resetTimer() {
+        localStorage.setItem('lastActiveTime', Date.now().toString());
+    }
+
+    // List of events that count as "activity"
+    ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+        document.addEventListener(event, resetTimer);
+    });
+
+    // 1. Run immediately on page load/re-open
+    checkSession();
+
+    // 2. Run every 2 seconds to check if time has run out while they are idle
+    setInterval(checkSession, 2000);
+</script>
+
 </body>
 </html>
